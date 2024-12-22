@@ -1,6 +1,8 @@
+import sys
+import argparse
 from javpy_core import JavpyCore
 
-def run_javpy_file(filepath):
+def run_javpy_file(filepath, show_tokens=False):
     if not filepath.endswith('.jvp'):
         print("Error: Invalid file extension.")
         return
@@ -14,6 +16,9 @@ def run_javpy_file(filepath):
 
         try:
             tokens = JavpyCore.tokenize(code)
+            if show_tokens:
+                print("Tokens:", tokens)
+            
             ast = JavpyCore.parse(tokens)
             if ast:
                 JavpyCore.interpret(ast)
@@ -23,4 +28,9 @@ def run_javpy_file(filepath):
             print(e)
 
 if __name__ == "__main__":
-    run_javpy_file(input("path to file: "))
+    parser = argparse.ArgumentParser(description='Javpy file runner')
+    parser.add_argument('filepath', help='Path to the .jvp file')
+    parser.add_argument('-t', '--tokens', action='store_true', help='Show tokens')
+    
+    args = parser.parse_args()
+    run_javpy_file(args.filepath, args.tokens)
