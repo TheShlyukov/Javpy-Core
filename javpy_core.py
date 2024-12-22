@@ -4,7 +4,8 @@ TOKEN_SPEC = [
     ("COMMENT_START", r'<\$>'),
     ("COMMENT_END", r'<\$!>'),
     ("PRINT", r'print\b'),
-    ("NUMBER", r'\d+'),
+    ("NUMBER", r'\d+(\.\d+)?'),  # This regex now correctly captures decimal numbers
+    ("STRING", r'<<[^>]*>>'),
     ("IDENT", r'[a-zA-Z_]\w*'),
     ("NEWLINE", r'\n'),
     ("SKIP", r'[ \t]+'),
@@ -37,7 +38,13 @@ class JavpyCore:
                     elif tok_type == "COMMENT_END":
                         in_comment = False
                     elif not in_comment and tok_type not in ["SKIP", "NEWLINE"]:
-                        tokens.append((tok_type, lexeme))
+                        if tok_type == "STRING":
+                            lexeme = lexeme[2:-2]
+                        # Special handling for decimal numbers
+                        if tok_type == "NUMBER" and '.' in lexeme:
+                            tokens.append((tok_type, float(lexeme)))
+                        else:
+                            tokens.append((tok_type, lexeme))
 
                     pos += len(lexeme)
                     break
@@ -50,11 +57,7 @@ class JavpyCore:
             if pos < len(code) and code[pos - 1] == '\n':
                 line_num += 1
 
-        if in_comment:
-            raise SyntaxError(f"Error: Unclosed comment starting at line {line_num}")
-
-        return tokens    
-
+        return tokens
     @staticmethod
     def parse(tokens):
         if not tokens:
@@ -67,13 +70,16 @@ class JavpyCore:
             return None
 
         def parse_statement():
-            if tokens and tokens[0][0] == "PRINT":
+            if not tokens:
+                return None
+            if tokens[0][0] == "PRINT":
                 return parse_print()
+            tokens.pop(0)
             return None
 
         def parse_print():
             if match("PRINT"):
-                value = match("IDENT") or match("NUMBER")
+                value = match("DECIMAL") or match("NUMBER") or match("IDENT") or match("STRING")
                 if value:
                     return JavpyCore.Node("Print", value=value[1])
                 raise SyntaxError("Error: Missing value after 'print'")
@@ -84,8 +90,6 @@ class JavpyCore:
             stmt = parse_statement()
             if stmt:
                 statements.append(stmt)
-            else:
-                raise SyntaxError(f"Error: Unexpected token {tokens[0]}")
 
         return statements
 
@@ -95,4 +99,13 @@ class JavpyCore:
             return
         for node in ast:
             if node.type == "Print":
-                print(node.value)
+                if isinstance(node.value, str):
+                    try:
+                        if '.' in node.value:
+                            print(float(node.value))
+                        else:
+                            print(int(node.value))
+                    except ValueError:
+                        print(node.value)
+                else:
+                    print(node.value)
