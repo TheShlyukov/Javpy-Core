@@ -5,3 +5,7 @@ This is a
 multi-line comment
 <$!>
 print 100
+<$> string test <$!>
+print <<Hello World!>>
+<$> Decimal test <$!>
+print 3.14
