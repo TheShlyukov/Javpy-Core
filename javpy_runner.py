@@ -18,6 +18,7 @@ def run_javpy_file(filepath, show_tokens=False):
             tokens = JavpyCore.tokenize(code)
             if show_tokens:
                 print("Tokens:", tokens)
+                print()
             
             ast = JavpyCore.parse(tokens)
             if ast:
@@ -33,4 +34,13 @@ if __name__ == "__main__":
     parser.add_argument('-t', '--tokens', action='store_true', help='Show tokens')
     
     args = parser.parse_args()
+    print("--------------------")
+    try:
+        print("Javpy-core", JavpyCore.JAVPY_CORE_VER)
+    except:
+        print("Javpy-Core (Unknown version)")
+    print("Runnig:", str(args.filepath))
+    print()
     run_javpy_file(args.filepath, args.tokens)
+    print()
+    print("--------------------")
