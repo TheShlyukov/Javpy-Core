@@ -9,3 +9,5 @@ print 100
 print <<Hello World!>>
 <$> Decimal test <$!>
 print 3.14
+<$> expressions test <$!>
+print (((2+2)*2)/2)**2
