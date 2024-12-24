@@ -23,7 +23,7 @@ class JavpyCore:
             self.value = value
             self.left = left
             self.right = right
-    @staticmethod
+
     def tokenize(code):
         tokens = []
         in_comment = False
@@ -62,7 +62,7 @@ class JavpyCore:
                 line_num += 1
 
         return tokens
-    @staticmethod
+
     def parse(tokens):
         if not tokens:
             return None
@@ -99,7 +99,7 @@ class JavpyCore:
                 left = JavpyCore.Node('Operation', operator, left, right)
             return left
 
-        @staticmethod
+
         def parse_primary():
             if not tokens:
                 raise SyntaxError("Unexpected end of input")
@@ -123,7 +123,6 @@ class JavpyCore:
                 return JavpyCore.Node("Print", value=expr)
             return None
 
-        @staticmethod
         def interpret(ast):
             if not ast:
                 return
@@ -162,7 +161,6 @@ class JavpyCore:
 
         return statements
 
-    @staticmethod
     def evaluate(node):
         if node.type == 'Number':
             return node.value
@@ -180,7 +178,6 @@ class JavpyCore:
             if node.value == '**': return left ** right
         return node.value
 
-    @staticmethod
     def interpret(ast):
         if not ast:
             return
@@ -192,7 +189,6 @@ class JavpyCore:
                 else:
                     print(result)
 
-    @staticmethod
     def parse_primary(self, tokens):
         if not tokens:
             raise SyntaxError("Unexpected end of input")
