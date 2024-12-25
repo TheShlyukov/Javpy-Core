@@ -1,13 +1,47 @@
 <$> This is a comment <$!>
+
 print 42
+
 <$>
 This is a 
 multi-line comment
 <$!>
+
 print 100
-<$> string test <$!>
+
+<$> String test <$!>
 print <<Hello World!>>
+
 <$> Decimal test <$!>
 print 3.14
-<$> expressions test <$!>
+
+print <<>>
+
+<$> Expressions test <$!>
 print (((2+2)*2)/2)**2
+
+<$>Variables test<$!>
+
+<$> String <$!>
+a: <<Variables!>>
+print a
+
+<$> Number <$!>
+b: 12
+print b
+
+<$> Decemal <$!>
+c: 3.14
+print c
+
+<$> Evaluation <$!>
+d: (((2+2)*2)/2)**2
+print d
+
+<$> Boolean <$!>
+e: False
+print e
+
+<$> Constants <$!>
+const Truth: True
+print Truth
