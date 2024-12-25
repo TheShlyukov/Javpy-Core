@@ -1,0 +1,22 @@
+{
+    "name": "javpy-language-support",
+    "displayName": "Javpy Language Support",
+    "description": "Language support for Javpy programming language",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.60.0"
+    },
+    "contributes": {
+        "languages": [{
+            "id": "javpy",
+            "aliases": ["Javpy", "javpy"],
+            "extensions": [".jvp"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "javpy",
+            "scopeName": "source.jvp",
+            "path": "./syntaxes/javpy.tmLanguage.json"
+        }]
+    }
+}

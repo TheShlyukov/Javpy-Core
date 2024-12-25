@@ -1,0 +1,33 @@
+{
+    "name": "Javpy",
+    "scopeName": "source.jvp",
+    "fileTypes": ["jvp"],
+    "patterns": [
+        {
+            "name": "comment.block.javpy",
+            "begin": "<\\$>",
+            "end": "<\\$!>"
+        },
+        {
+            "name": "keyword.control.javpy",
+            "match": "\\b(print|const)\\b"
+        },
+        {
+            "name": "string.quoted.double.javpy",
+            "begin": "<<",
+            "end": ">>"
+        },
+        {
+            "name": "constant.numeric.javpy",
+            "match": "\\b\\d+(\\.\\d+)?\\b"
+        },
+        {
+            "name": "constant.language.javpy",
+            "match": "\\b(True|False)\\b"
+        },
+        {
+            "name": "keyword.operator.javpy",
+            "match": "(\\+|\\-|\\*|\\/|\\/\\/|\\%|\\*\\*)"
+        }
+    ]
+}
